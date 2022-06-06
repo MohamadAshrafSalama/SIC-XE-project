@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+output/*.txt
+!output/.gitkeep
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
