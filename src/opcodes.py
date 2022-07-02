@@ -87,7 +87,12 @@ def get_opcode(mnemonic):
 
 
 def get_format(mnemonic):
-    """Return the instruction format (1, 2, 3, or 4) for a mnemonic."""
+    """
+    Return the instruction format (1, 2, 3, or 4) for a mnemonic.
+
+    Format 4 is indicated by a '+' prefix on a format 3 instruction.
+    Returns None if the mnemonic is not recognized.
+    """
     clean = mnemonic.lstrip('+')
     if clean in OPCODE_TABLE:
         fmt = OPCODE_TABLE[clean][1]
