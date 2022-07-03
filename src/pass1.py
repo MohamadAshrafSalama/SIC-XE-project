@@ -12,16 +12,31 @@ from .opcodes import get_format, is_directive, DIRECTIVES
 from .utils import parse_line, byte_length
 
 
+class AssemblyError(Exception):
+    """Custom exception for assembly errors with line number context."""
+    def __init__(self, message, line_num=None):
+        self.line_num = line_num
+        if line_num:
+            super().__init__(f"Line {line_num}: {message}")
+        else:
+            super().__init__(message)
+
+
 class SymbolTable:
-    """Symbol table for the assembler."""
+    """
+    Symbol table for the assembler.
+
+    Stores label -> address mappings. Duplicate definitions
+    raise an error since SIC/XE does not allow redefinition.
+    """
 
     def __init__(self):
         self.symbols = {}
 
     def insert(self, label, address):
-        """Insert a symbol. Raises error on duplicate."""
+        """Insert a symbol. Raises AssemblyError on duplicate."""
         if label in self.symbols:
-            raise ValueError(f"Duplicate symbol: {label}")
+            raise AssemblyError(f"Duplicate symbol: {label}")
         self.symbols[label] = address
 
     def lookup(self, label):
@@ -29,9 +44,11 @@ class SymbolTable:
         return self.symbols.get(label)
 
     def contains(self, label):
+        """Check if a symbol exists in the table."""
         return label in self.symbols
 
     def items(self):
+        """Return all symbol-address pairs."""
         return self.symbols.items()
 
 
