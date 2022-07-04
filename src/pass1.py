@@ -165,7 +165,7 @@ def pass1(source_lines):
             # Machine instruction
             fmt = get_format(mnemonic)
             if fmt is None:
-                raise ValueError(f"Line {line_num}: Unknown instruction '{mnemonic}'")
+                raise AssemblyError(f"Unknown instruction '{mnemonic}'", line_num)
             locctr += fmt
 
     program_length = locctr - start_address
