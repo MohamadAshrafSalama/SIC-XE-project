@@ -83,6 +83,11 @@ def parse_operand(operand):
     """
     Parse an operand string and determine addressing mode.
 
+    SIC/XE supports three addressing modes via prefix characters:
+      #value  - immediate addressing (operand is the value itself)
+      @value  - indirect addressing (operand points to address of target)
+      value,X - indexed addressing (effective address = value + X register)
+
     Returns: (symbol_or_value, addressing_flags)
     addressing_flags is a dict with keys: immediate, indirect, indexed
     """
@@ -105,3 +110,14 @@ def parse_operand(operand):
         operand = operand[1:]
 
     return operand, flags
+
+
+def validate_source_line(line, line_num):
+    """Basic validation of a source line format."""
+    stripped = line.strip()
+    if not stripped or stripped.startswith('.'):
+        return True
+    parts = stripped.split()
+    if len(parts) < 1:
+        return False
+    return True
