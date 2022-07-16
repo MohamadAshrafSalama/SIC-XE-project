@@ -240,7 +240,11 @@ def _generate_format4(opcode_val, operand, symtab):
 
 
 def mnemonic_is_rsub(opcode_val):
-    """Check if an opcode value corresponds to RSUB (0x4C)."""
+    """
+    Check if an opcode value corresponds to RSUB (0x4C).
+    RSUB is special because it has no operand - the return
+    address is implicitly in the L register.
+    """
     return opcode_val == 0x4C
 
 
