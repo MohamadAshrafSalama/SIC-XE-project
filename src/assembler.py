@@ -40,10 +40,18 @@ def write_object_program(records, filepath):
 
 
 def write_listing(listing, filepath):
-    """Write the assembly listing to a file."""
+    """
+    Write the assembly listing to a file.
+
+    The listing shows each source line alongside its assigned address
+    and generated object code, making it easy to trace through
+    the assembled program.
+    """
     with open(filepath, 'w') as f:
-        f.write(f"{'Loc':<8} {'Label':<10} {'Mnemonic':<10} {'Operand':<16} {'Object Code':<12}\n")
-        f.write('-' * 60 + '\n')
+        header = (f"{'Loc':<8} {'Label':<10} {'Mnemonic':<10} "
+                  f"{'Operand':<16} {'Object Code':<12}")
+        f.write(header + '\n')
+        f.write('-' * len(header) + '\n')
         for entry in listing:
             if entry.get('source', '').startswith('.'):
                 f.write(f"{'':8} {entry['source']}\n")
