@@ -91,12 +91,18 @@ def pass2(symtab, intermediate, program_name, start_address, program_length):
 
             elif fmt == 4:
                 obj = _generate_format4(opcode_val, operand, symtab)
-                # Format 4 needs a modification record (for relocatable addresses)
-                if operand and not operand.startswith('#'):
-                    mod_addr = address + 1
-                    modification_records.append(
-                        f"M{hex_str(mod_addr, 6)}05"
-                    )
+                # Format 4 with relocatable addresses needs modification records.
+                # Immediate values (#) that are constants don't need relocation,
+                # but immediate references to symbols do.
+                if operand:
+                    _, addr_flags = parse_operand(operand)
+                    symbol_name = operand.lstrip('#@').replace(',X', '')
+                    is_constant = symbol_name.isdigit()
+                    if not is_constant:
+                        mod_addr = address + 1
+                        modification_records.append(
+                            f"M{hex_str(mod_addr, 6)}05"
+                        )
 
         object_code.append((address, obj))
         listing.append({
