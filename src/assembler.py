@@ -137,8 +137,9 @@ def main():
 
     try:
         assemble(args.source, args.output)
+        print("\nAssembly completed successfully.")
     except Exception as e:
-        print(f"Assembly error: {e}")
+        print(f"\nAssembly error: {e}")
         sys.exit(1)
 
 
