@@ -151,6 +151,12 @@ def pass1(source_lines):
         # Advance location counter
         if mnemonic == 'EQU':
             pass  # EQU does not advance LOCCTR
+        elif mnemonic == 'ORG':
+            # ORG resets the location counter to the specified value
+            if operand == '*':
+                pass  # ORG * does nothing special here
+            else:
+                locctr = _evaluate_expression(operand, symtab)
         elif mnemonic == 'BASE' or mnemonic == 'NOBASE':
             pass  # Directives that don't occupy memory
         elif mnemonic == 'RESW':
