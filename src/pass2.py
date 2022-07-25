@@ -57,7 +57,7 @@ def pass2(symtab, intermediate, program_name, start_address, program_length):
             base_register = None
             obj = ''
 
-        elif mnemonic == 'EQU':
+        elif mnemonic == 'EQU' or mnemonic == 'ORG':
             obj = ''
 
         elif mnemonic == 'BYTE':
