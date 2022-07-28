@@ -18,9 +18,12 @@ from .utils import hex_str
 
 
 def read_source(filepath):
-    """Read source file and return lines."""
-    with open(filepath, 'r') as f:
-        return f.readlines()
+    """Read source file and return lines. Strips BOM if present."""
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
+        lines = f.readlines()
+    if not lines:
+        raise ValueError("Source file is empty")
+    return lines
 
 
 def write_symbol_table(symtab, filepath):
