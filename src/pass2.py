@@ -165,7 +165,7 @@ def _generate_format3(opcode_val, operand, symtab, pc, base_register):
         second_half = (x << 15) | (b << 14) | (p << 13) | (e << 12) | (disp & 0xFFF)
         return hex_str(first_byte, 2) + hex_str(second_half, 4)
 
-    # Resolve target address
+    # Resolve the target address for displacement calculation
     if symbol is None:
         target = 0
     elif symbol.isdigit() or (symbol.startswith('-') and symbol[1:].isdigit()):
