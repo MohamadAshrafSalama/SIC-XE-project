@@ -1,0 +1,53 @@
+NAME START 0000
+xx +ADD #BUFFLEN
+. RES W/B TEST------------------
+FX RESW 10
+FX2 RESB 10
+. WORD/BYTE TEST----------------------------------
+F1 WORD 10
+F2 BYTE X'05',X'10',X'AF'
+F3 BYTE C'EOF'
+. FORMAT 1 TEST-----------------------------------
+F4 FIX -
+F5 SIO -
+. FORMAT 2 TEST----------------------------------
+F6 COMPR B,S
+F7 COMPR T,F
+F8 CLEAR S
+. FORMAT 3 TEST-----------------------------------
+F9 ADD @F1
+F10 STL #4096
+F11 ADD #F1
+F12 LDB F1
+F13 ADD F1,X
+. FORMAT 4 TEST------------------------------------
+F14 +ADD @F1
+F15 +STL #4096
+F16 +ADD #F1
+F17 +LDB F1
+F18 +ADD F1,X
+. FORMAT 5 TEST------------------------------------------
+F23 &ADD F1
+F24 &STL F1,X
+. format 6 text--------------------------------------------
+F25 $ADD @F1
+F26 $STL #0000
+F27 $ADD #F1
+F28 $LDB F9
+F29 $ADD F1,X
+. base test----------------------------------------
+FARA8 RESB 4096
+F30 ADD F1
+. literal test-------------------
+F31 ADD =C'EOF'
+- LDA =C'AAA'
+F34 ADD F1
+- LTORG -
+f35 ADD F1
+ff ADD =X'11'
+. EQU test---------------------------
+BUFFER RESB 10
+BUFFEND EQU *
+BUFFLEN EQU BUFFER-BUFFEND
+BUFFALL EQU BUFFER+BUFFEND
+- END 0000
